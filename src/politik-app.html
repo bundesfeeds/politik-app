@@ -28,6 +28,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="politik-icons.html">
 
 <link rel="lazy-import" href="politik-parliaments.html">
+<link rel="import" href="politik-candidates.html">
+<link rel="import" href="politik-committees.html">
+<link rel="import" href="politik-constituencies.html">
+<link rel="import" href="politik-deputies.html">
+<link rel="import" href="politik-polls.html">
+
 <link rel="import" href="politik-parliaments-menu.html">
 <link rel="lazy-import" href="politik-view404.html">
 
@@ -108,6 +114,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             fallback-selection="view404"
             role="main">
           <politik-parliaments name="parliaments"></politik-parliaments >
+          <politik-candidates name="candidates"></politik-candidates>
+          <politik-committees name="committees"></politik-committees>
+          <politik-constituencies name="constituencies"></politik-constituencies>
+          <politik-deputies name="deputies"></politik-deputies>
+          <politik-polls name="polls"></politik-polls>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
@@ -144,6 +155,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _routePageChanged(page) {
+        console.log(page);
         // If no page was found in the route data, page will be an empty string.
         // Default to 'view1' in that case.
         this.page = page || 'parliaments';
