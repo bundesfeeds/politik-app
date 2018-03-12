@@ -1,0 +1,91 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="politik-parliaments-menu" selected$="[[selected]]">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      #menu {
+        background-color: white;
+        max-width: 200px;
+      }
+
+      .button {
+        width: 100px;
+        font-size: 8pt;
+        background-color: white;
+      }
+
+    </style>
+    <iron-ajax auto url="src/data/p.json" handle-as="json" last-response="{{parliaments}}">
+    </iron-ajax>
+    <select id="menu" on-change="handleMenu">
+      <template is="dom-repeat" items="{{parliaments.parliaments}}">
+        <option value="{{item.meta.uuid}}">{{item.name}}</option>
+      </template>
+    </select>
+    <button on-click="handleOption" class="button" value$="[[selected]]">candidates</button>
+    <button on-click="handleOption" class="button" value$="[[selected]]">committees</button>
+    <button on-click="handleOption" class="button" value$="[[selected]]">constituencies</button>
+    <button on-click="handleOption" class="button" value$="[[selected]]">deputies</button>
+    <button on-click="handleOption" class="button" value$="[[selected]]">polls</button>
+
+  </template>
+
+  <script>
+    class PolitikParliamentsMenu extends Polymer.Element {
+      constructor() {
+        super();
+       }
+
+       getLinks(uuid) {
+         function fname(type, uuid) {
+           return './src/data/' + [type, uuid].join('-') + '.json'
+         }
+
+         return {
+           uuid: uuid,
+           candidates: fname('candidates', uuid),
+           committees: fname('committees', uuid),
+           constituencies: fname('constituencies', uuid),
+           deputies: fname('deputies', uuid),
+           polls: fname('polls', uuid),
+         }
+       }
+       handleMenu(res) {
+         this.setAttribute('selected', res.target.value);
+       }
+       handleOption(res) {
+         var route =[res.target.innerHTML].join('')
+         document.querySelector("my-app").set('route.path', route);
+       }
+       static get properties() {
+        return {
+          selected: {
+            type: String
+          },
+          parliaments: {
+            type: Array
+          }
+        }
+      }
+      static get is() { return 'politik-parliaments-menu'; }
+    }
+
+    window.customElements.define(PolitikParliamentsMenu.is, PolitikParliamentsMenu);
+  </script>
+</dom-module>

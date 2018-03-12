@@ -18,16 +18,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
 
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
 <link rel="import" href="politik-icons.html">
 
 <link rel="lazy-import" href="politik-parliaments.html">
-
+<link rel="import" href="politik-parliaments-menu.html">
 <link rel="lazy-import" href="politik-view404.html">
 
 <dom-module id="my-app">
@@ -87,9 +88,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPath]]parliaments">Parlamente</a>
-        </iron-selector>
+        <politik-parliaments-menu name="politik-parliaments-menu"></politik-parliaments-menu>
+
       </app-drawer>
 
       <!-- Main content -->
