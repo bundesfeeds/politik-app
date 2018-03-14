@@ -1,11 +1,17 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/politik-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/politik-candidates-meta.html",
+    "src/politik-candidates.html",
+    "src/politik-committees.html",
+    "src/politik-constituencies.html",
+    "src/politik-deputies.html",
+    "src/politik-icons.html",
+    "src/politik-parliaments-menu.html",
+    "src/politik-parliaments.html",
+    "src/politik-polls.html",
+    "src/politik-view404.html"
   ],
   "sources": [
     "images/**/*",
