@@ -9,7 +9,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-filter.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-sorter.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="politik-candidates-meta.html">
 
 <dom-module id="politik-candidates">
   <template>
@@ -19,14 +23,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 10px;
       }
     </style>
+    <iron-ajax auto url="{{src}}" handle-as="json" last-response="{{candidates}}" on-response="handleResponse">
+    </iron-ajax>
     <h1>Candidates</h1>
+    <politik-candidates-meta candidates="{{candidates}}"></politik-candidates-meta>
+
+    <span>License: {{candidates.meta.license.name}}</span>
+     <vaadin-grid aria-label="Basic Binding Example" items="[[candidates.profiles]]" multisort="true">
+       <vaadin-grid-column width="60px" flex-grow="1">
+        <template class="header">#</template>
+        <template>[[index]]</template>
+        <!-- If necessary, the footer could be set using <template class="footer"> -->
+        <template class="footer">#</template>
+      </vaadin-grid-column>
+      <vaadin-grid-column>
+          <template class="header">
+            <vaadin-grid-filter
+              aria-label="partei"
+              path="party"
+              value="[[_filterParty]]">
+              <vaadin-text-field
+                slot="filter"
+                placeholder="Partei"
+                value="{{_filterParty}}"
+                focus-target>
+              </vaadin-text-field>
+            </vaadin-grid-filter>
+          </template>
+          <template>[[item.party]]</template>
+          <template class="footer">Partei</template>
+        </vaadin-grid-column>
+        <vaadin-grid-column>
+            <template class="header">Name</template>
+            <template>[[item.personal.last_name]], [[item.personal.first_name]]</template>
+            <template class="footer">Partei</template>
+          </vaadin-grid-column>
+       </vaadin-grid>
+     </vaadin-grid>
     </template>
 
   <script>
     class PolitikCandidates extends Polymer.Element {
       constructor() {
-          super();
-       }
+        super();
+      }
+      static get properties() {
+        return {
+          filterParty: String,
+          src: String,
+          tableData: Array
+        }
+      }
+      handleResponse(req) {
+        console.log(this.candidates.meta);
+        // console.log(this.candidates.profiles)
+      }
       static get is() { return 'politik-candidates'; }
     }
 

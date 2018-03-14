@@ -30,6 +30,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: white;
       }
 
+
+      .hidden {
+        display: none;
+      }
+
+
     </style>
     <iron-ajax auto url="src/data/p.json" handle-as="json" last-response="{{parliaments}}">
     </iron-ajax>
@@ -38,12 +44,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <option value="{{item.meta.uuid}}">{{item.name}}</option>
       </template>
     </select>
-    <button on-click="handleOption" class="button" value$="[[selected]]">candidates</button>
-    <button on-click="handleOption" class="button" value$="[[selected]]">committees</button>
-    <button on-click="handleOption" class="button" value$="[[selected]]">constituencies</button>
-    <button on-click="handleOption" class="button" value$="[[selected]]">deputies</button>
-    <button on-click="handleOption" class="button" value$="[[selected]]">polls</button>
-
+    <div class="hidden" id="submenu">
+      <button on-click="handleOption" class="button" value$="[[selected]]">candidates</button>
+      <button on-click="handleOption" class="button" value$="[[selected]]">committees</button>
+      <button on-click="handleOption" class="button" value$="[[selected]]">constituencies</button>
+      <button on-click="handleOption" class="button" value$="[[selected]]">deputies</button>
+      <button on-click="handleOption" class="button" value$="[[selected]]">polls</button>
+    </div>
   </template>
 
   <script>
@@ -67,6 +74,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          }
        }
        handleMenu(res) {
+         this.$.submenu.classList.remove('hidden');
+
          this.setAttribute('selected', res.target.value);
        }
        handleOption(res) {

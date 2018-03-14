@@ -27,12 +27,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="politik-icons.html">
 
-<link rel="lazy-import" href="politik-parliaments.html">
-<link rel="import" href="politik-candidates.html">
-<link rel="import" href="politik-committees.html">
-<link rel="import" href="politik-constituencies.html">
-<link rel="import" href="politik-deputies.html">
-<link rel="import" href="politik-polls.html">
+<link rel="import" href="politik-parliaments.html">
+<link rel="lazy-import" href="politik-candidates.html">
+<link rel="lazy-import" href="politik-committees.html">
+<link rel="lazy-import" href="politik-constituencies.html">
+<link rel="lazy-import" href="politik-deputies.html">
+<link rel="lazy-import" href="politik-polls.html">
+
 
 <link rel="import" href="politik-parliaments-menu.html">
 <link rel="lazy-import" href="politik-view404.html">
@@ -94,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar>Menu</app-toolbar>
-        <politik-parliaments-menu name="politik-parliaments-menu"></politik-parliaments-menu>
+        <politik-parliaments-menu id="menu" name="politik-parliaments-menu"></politik-parliaments-menu>
 
       </app-drawer>
 
@@ -113,12 +114,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <politik-parliaments name="parliaments"></politik-parliaments >
-          <politik-candidates name="candidates"></politik-candidates>
-          <politik-committees name="committees"></politik-committees>
-          <politik-constituencies name="constituencies"></politik-constituencies>
-          <politik-deputies name="deputies"></politik-deputies>
-          <politik-polls name="polls"></politik-polls>
+          <politik-parliaments id="politik-parliaments" name="parliaments"></politik-parliaments >
+          <politik-candidates id="politik-candidates" name="candidates"></politik-candidates>
+          <politik-committees id="politik-committees" name="committees"></politik-committees>
+          <politik-constituencies id="politik-constituencies" name="constituencies"></politik-constituencies>
+          <politik-deputies id="politik-deputies" name="deputies"></politik-deputies>
+          <politik-polls id="politik-polls" name="polls"></politik-polls>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
@@ -168,6 +169,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
+
+        var id = 'politik-' + page;
+        var uuid = this.$['menu'].selected;
+        var links = this.$['menu'].getLinks(uuid);
+        this.$[id].setAttribute('src', links[page]);
 
         const resolvedPageUrl = this.resolveUrl('politik-' + page + '.html');
         Polymer.importHref(
